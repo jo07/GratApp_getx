@@ -5,7 +5,7 @@ import 'package:shop_app/screens/profile/profile_screen.dart';
 
 import '../constants.dart';
 import '../enums.dart';
-
+import 'package:get/get.dart';
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
     Key? key,
@@ -46,7 +46,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
+                    Get.toNamed(HomeScreen.routeName)
+                    // Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
@@ -64,7 +65,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, ProfileScreen.routeName),
+                    Get.toNamed(ProfileScreen.routeName),
               ),
             ],
           )),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/size_config.dart';
-
+import 'package:get/get.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,8 @@ class Body extends StatelessWidget {
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
             text: "Back to home",
-            press: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
-            },
+            press: ()  => Get.toNamed(HomeScreen.routeName),
+
           ),
         ),
         Spacer(),

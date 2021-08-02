@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../size_config.dart';
-
+import 'package:get/get.dart';
 // class CustomAppBar extends PreferredSize {
 class CustomAppBar extends StatelessWidget{
   final double rating;
@@ -30,7 +30,8 @@ class CustomAppBar extends StatelessWidget{
                 ),
                 color: Colors.white,
                 padding: EdgeInsets.zero,
-                onPressed: () => Navigator.pop(context),
+                onPressed: () =>  Get.back(),
+
                 child: SvgPicture.asset(
                   "assets/icons/Back ICon.svg",
                   height: 15,

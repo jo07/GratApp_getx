@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
@@ -28,3 +30,61 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };
 
+
+List<GetPage<dynamic>> getPages = [
+  GetPage(
+      name: SplashScreen.routeName,
+      page: () => SplashScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: SignInScreen.routeName,
+      page: () => SignInScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: ForgotPasswordScreen.routeName,
+      page: () => ForgotPasswordScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: LoginSuccessScreen.routeName,
+      page: () => LoginSuccessScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: SignUpScreen.routeName,
+      page: () => SignUpScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: CompleteProfileScreen.routeName,
+      page: () => CompleteProfileScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: OtpScreen.routeName,
+      page: () => OtpScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: HomeScreen.routeName,
+      page: () => HomeScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: DetailsScreen.routeName,
+      page: () => DetailsScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: CartScreen.routeName,
+      page: () => CartScreen(),
+      transition: Transition.zoom
+  ),
+  GetPage(
+      name: ProfileScreen.routeName,
+      page: () => ProfileScreen(),
+      transition: Transition.zoom
+  )
+];

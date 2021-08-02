@@ -6,7 +6,7 @@ import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-
+import 'package:get/get.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -54,7 +54,8 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Get.toNamed(CompleteProfileScreen.routeName);
+
               }
             },
           ),

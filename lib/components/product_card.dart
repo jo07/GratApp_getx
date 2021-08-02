@@ -5,6 +5,7 @@ import 'package:shop_app/screens/details/details_screen.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
+import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -24,8 +25,7 @@ class ProductCard extends StatelessWidget {
       child: SizedBox(
         width: getProportionateScreenWidth(width),
         child: GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
+          onTap: () => Get.toNamed(
             DetailsScreen.routeName,
             arguments: ProductDetailsArguments(product: product),
           ),

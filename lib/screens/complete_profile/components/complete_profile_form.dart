@@ -6,6 +6,7 @@ import 'package:shop_app/screens/otp/otp_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'package:get/get.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                Get.toNamed(OtpScreen.routeName);
               }
             },
           ),

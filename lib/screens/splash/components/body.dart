@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_app/constants.dart';
+import 'package:shop_app/controllers/splash_controller.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/size_config.dart';
 
@@ -8,28 +9,9 @@ import 'package:shop_app/size_config.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 
-class Body extends StatefulWidget {
-  @override
-  _BodyState createState() => _BodyState();
-}
+class Body extends StatelessWidget {
+  final SplashController splashController = SplashController.to;
 
-class _BodyState extends State<Body> {
-  int currentPage = 0;
-  List<Map<String, String>> splashData = [
-    {
-      "text": "Welcome to Tokoto, Let’s shop!",
-      "image": "assets/images/splash_1.png"
-    },
-    {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
-    },
-    {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,16 +21,16 @@ class _BodyState extends State<Body> {
           children: <Widget>[
             Expanded(
               flex: 3,
-              child: PageView.builder(
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                itemCount: splashData.length,
-                itemBuilder: (context, index) => SplashContent(
-                  image: splashData[index]["image"],
-                  text: splashData[index]['text'],
+              child: Obx(() => PageView.builder(
+                  onPageChanged: (value) {
+                    splashController.currentPage(value);
+
+                  },
+                  itemCount: splashController.splashData.length,
+                  itemBuilder: (context, index) => SplashContent(
+                    image: splashController.splashData[index]["image"],
+                    text: splashController.splashData[index]['text'],
+                  ),
                 ),
               ),
             ),
@@ -60,11 +42,12 @@ class _BodyState extends State<Body> {
                 child: Column(
                   children: <Widget>[
                     Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        splashData.length,
-                        (index) => buildDot(index: index),
+                    Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          splashController.splashData.length,
+                          (index) => buildDot(index: index),
+                        ),
                       ),
                     ),
                     Spacer(flex: 3),
@@ -86,15 +69,16 @@ class _BodyState extends State<Body> {
     );
   }
 
-  AnimatedContainer buildDot({int? index}) {
-    return AnimatedContainer(
-      duration: kAnimationDuration,
-      margin: EdgeInsets.only(right: 5),
-      height: 6,
-      width: currentPage == index ? 20 : 6,
-      decoration: BoxDecoration(
-        color: currentPage == index ? kPrimaryColor : Color(0xFFD8D8D8),
-        borderRadius: BorderRadius.circular(3),
+  Obx buildDot({int? index}) {
+    return Obx(()  => AnimatedContainer(
+        duration: kAnimationDuration,
+        margin: EdgeInsets.only(right: 5),
+        height: 6,
+        width: splashController.currentPage.value == index ? 20 : 6,
+        decoration: BoxDecoration(
+          color: splashController.currentPage.value == index ? kPrimaryColor : Color(0xFFD8D8D8),
+          borderRadius: BorderRadius.circular(3),
+        ),
       ),
     );
   }

@@ -2,38 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
+import 'package:shop_app/controllers/sign_form_controller.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:get/get.dart';
 
-class SignUpForm extends StatefulWidget {
-  @override
-  _SignUpFormState createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
+class SignUpForm extends StatelessWidget {
+  final SignFormController signFormController = SignFormController.to;
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
-  String? conform_password;
-  bool remember = false;
-  final List<String?> errors = [];
-
-  void addError({String? error}) {
-    if (!errors.contains(error))
-      setState(() {
-        errors.add(error);
-      });
-  }
-
-  void removeError({String? error}) {
-    if (errors.contains(error))
-      setState(() {
-        errors.remove(error);
-      });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +24,7 @@ class _SignUpFormState extends State<SignUpForm> {
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildConformPassFormField(),
-          FormError(errors: errors),
+          FormError(errors: signFormController.errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
@@ -67,21 +45,21 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
+      onSaved: (newValue) => signFormController.confirmPassword(newValue),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
+          signFormController.removeError(error: kPassNullError);
+        } else if (value.isNotEmpty && signFormController.password.value == signFormController.confirmPassword.value) {
+          signFormController.removeError(error: kMatchPassError);
         }
-        conform_password = value;
+        signFormController.confirmPassword(value);
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPassNullError);
+          signFormController.addError(error: kPassNullError);
           return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
+        } else if ((signFormController.password.value != value)) {
+          signFormController.addError(error: kMatchPassError);
           return "";
         }
         return null;
@@ -100,21 +78,21 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => signFormController.password(newValue),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
+          signFormController.removeError(error: kPassNullError);
         } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
+          signFormController.removeError(error: kShortPassError);
         }
-        password = value;
+        signFormController.password(value);
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPassNullError);
+          signFormController.addError(error: kPassNullError);
           return "";
         } else if (value.length < 8) {
-          addError(error: kShortPassError);
+          signFormController.addError(error: kShortPassError);
           return "";
         }
         return null;
@@ -133,21 +111,21 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => signFormController.email(newValue),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
+          signFormController.removeError(error: kEmailNullError);
         } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          signFormController.removeError(error: kInvalidEmailError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kEmailNullError);
+          signFormController.addError(error: kEmailNullError);
           return "";
         } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
+          signFormController.addError(error: kInvalidEmailError);
           return "";
         }
         return null;
